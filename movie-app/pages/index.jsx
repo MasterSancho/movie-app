@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import SideMenu from '../components/SideMenu';
@@ -5,7 +6,17 @@ import Carousel from '../components/Carousel';
 import MovieList from '../components/MovieList';
 import Footer from '../components/Footer';
 
-export default function Home() {
+const Home = () => {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
   return (
     <div>
       <Head>
@@ -36,14 +47,26 @@ export default function Home() {
       <Navbar />
       <div className='home-page'>
         <div className='container'>
+          <button onClick={increment} className='btn btn-primary'>
+            Increment Number
+          </button>
+          <button onClick={decrement} className='btn btn-primary'>
+            Decrement Number
+          </button>
           <div className='row'>
             <div className='col-lg-3'>
-              <SideMenu />
+              <SideMenu
+                appName={'Movie DB'}
+                clickHandler={() => {
+                  console.log('Hello World');
+                }}
+                count={count}
+              />
             </div>
             <div className='col-lg-9'>
               <Carousel />
               <div className='row'>
-                <MovieList />
+                <MovieList count={count} />
               </div>
             </div>
           </div>
@@ -59,4 +82,6 @@ export default function Home() {
       </style>
     </div>
   );
-}
+};
+
+export default Home;
